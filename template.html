@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Class Designer</title>
+    <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.css"/>
+    <!-- jquery, moment, and angular have to get included before fullcalendar -->
+    <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-ui-calendar/src/calendar.js"></script>
+    <script type="text/javascript" src="bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
+    <script type="text/javascript" src="bower_components/fullcalendar/dist/gcal.js"></script>
+
+    <style type="text/css">
+        body, html {
+            margin: 0;
+            height: 100%;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            margin: 0;
+        }
+
+        .noselect {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .maintable {
+            width: 100%;
+            height: 60%;
+            border-collapse: collapse;
+        }
+
+        .maintable tr {
+            vertical-align: top;
+        }
+    </style>
+
+    <script>
+        var app = angular.module("app", ["ui.calendar"]);
+
+        app.controller("MainCtrl", function ($scope, $compile, uiCalendarConfig) {
+            var date = new Date();
+            var d = date.getDate();
+            var m = 4;
+            var y = 2000;
+
+            $scope.events = [
+                {
+                    id: 0,
+                    title: "COMP414",
+                    start: new Date(y, m, 1, 8, 0),
+                    end: new Date(y, m, 1, 8, 50),
+                    allDay: false,
+                    backgroundColor: "red",
+                    borderColor: "red"
+                },
+                {
+                    id: 0,
+                    title: "COMP414",
+                    start: new Date(y, m, 3, 8, 0),
+                    end: new Date(y, m, 3, 8, 50),
+                    allDay: false,
+                    backgroundColor: "red",
+                    borderColor: "red"
+                },
+                {
+                    id: 0,
+                    title: "COMP414",
+                    start: new Date(y, m, 5, 8, 0),
+                    end: new Date(y, m, 5, 8, 50),
+                    allDay: false,
+                    backgroundColor: "red",
+                    borderColor: "red"
+                },
+
+                {
+                    id: 0,
+                    title: "SOCL406",
+                    start: new Date(y, m, 1, 9, 0),
+                    end: new Date(y, m, 1, 10, 50),
+                    allDay: false,
+                    backgroundColor: "blue",
+                    borderColor: "blue"
+                },
+                {
+                    id: 0,
+                    title: "SOCL406",
+                    start: new Date(y, m, 3, 9, 0),
+                    end: new Date(y, m, 3, 10, 50),
+                    allDay: false,
+                    backgroundColor: "blue",
+                    borderColor: "blue"
+                }
+            ];
+
+            $scope.renderCalender = function (calendar) {
+                if (uiCalendarConfig.calendars[calendar]) {
+                    uiCalendarConfig.calendars[calendar].fullCalendar('render');
+                }
+            };
+
+            /* config object */
+            $scope.uiConfig = {
+                calendar: {
+                    height: 654,
+                    editable: false,
+                    header: {
+                        left: '',
+                        center: '',
+                        right: ''
+                    },
+                    //eventRender: $scope.eventRender,
+                    defaultView: 'agendaWeek',
+                    weekends: false,
+                    maxTime: "19:00",
+                    minTime: "7:00",
+                    allDaySlot: false,
+                    columnFormat: "dddd",
+                    defaultDate: new Date(2000, 4, 1) // May (4) of 2000 was chosen because 01 is Monday
+                }
+            };
+
+            $scope.eventSources = [$scope.events];
+        });
+    </script>
+</head>
+<body ng-app="app" ng-controller="MainCtrl" class="noselect">
+<h1>Welcome to Class Designer</h1>
+
+<h2>Enter your classes on the left</h2>
+<br/> <br/> <br/>
+<table class="maintable">
+    <tr>
+        <td style="width: 15%;">
+            <h3>Classes</h3>
+            <input type="text" value="COMP362"/>
+            <button>X</button>
+            <br/>
+            <input type="text" value="COMP 414"/>
+            <button>X</button>
+            <br/>
+            <input type="text" value="SOCL406"/>
+            <button>X</button>
+            <br/>
+            <input type="text" value="MATH    505"/>
+            <button>X</button>
+        </td>
+        <td style="padding:0;" class="noselect">
+            <div ui-calendar="uiConfig.calendar" ng-model="eventSources" style="position:relative;top:-34px;"></div>
+        </td>
+        <td style="width: 25%;">
+            <ul>
+                <li>COMP362 - Operating Systems
+                    <ul>
+                        <li><input type="checkbox"/>8am - 8:50am MWF Professor X</li>
+                        <li><input type="checkbox" checked="checked"/>9am - 9:50am MWF Wolverine</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <ul>
+                <li>COMP414 - Algorithm Design and Analysis
+                    <ul>
+                        <li><input type="checkbox" checked="checked"/>10am - 11:50am MWF Professor X</li>
+                        <li><input type="checkbox"/>12am - 1:50pm MWF Wolverine</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <ul>
+                <li>SOCL406 - Social Problems
+                    <ul>
+                        <li><input type="checkbox"/>9am - 9:50pm MTWF Beast</li>
+                        <li><input type="checkbox" checked="checked"/>10am - 11:50am TR Storm</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <ul>
+                <li>MATH404 - Probability and Statistics
+                    <ul>
+                        <li><input type="checkbox"/>1pm - 1:50pm MTRF Cyclops</li>
+                        <li><input type="checkbox" checked="checked"/>2pm - 2:50pm WTRF Angel</li>
+                    </ul>
+                </li>
+            </ul>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
